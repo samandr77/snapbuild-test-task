@@ -296,6 +296,42 @@ describe('интерфейс сайта', { concurrency: false }, () => {
     assert.equal(mobileOpacity, 1)
   })
 
+  test('секция продукта повторяет иерархию оригинального лендинга', async () => {
+    await useViewport(1440, 1200)
+
+    const layout = await evaluate(`
+      (() => {
+        const rect = (selector) => document.querySelector(selector).getBoundingClientRect()
+        const header = rect('.ucase__header')
+        const title = rect('.ucase__title')
+        const tabs = rect('.ucase__group')
+        const body = rect('.ucase__body')
+        const points = rect('.ucase__points')
+        const panel = rect('.ucase__panel')
+
+        return {
+          headerDirection: getComputedStyle(document.querySelector('.ucase__header')).flexDirection,
+          headerWidth: header.width,
+          titleWidth: title.width,
+          titleBottom: title.bottom,
+          tabsTop: tabs.top,
+          tabsBottom: tabs.bottom,
+          bodyTop: body.top,
+          pointsShare: points.width / body.width,
+          pointsRight: points.right,
+          panelLeft: panel.left,
+        }
+      })()
+    `)
+
+    assert.equal(layout.headerDirection, 'column')
+    assert.ok(Math.abs(layout.headerWidth - layout.titleWidth) < 1)
+    assert.ok(layout.tabsTop > layout.titleBottom)
+    assert.ok(layout.bodyTop > layout.tabsBottom)
+    assert.ok(layout.pointsShare >= 0.24 && layout.pointsShare <= 0.25)
+    assert.ok(layout.panelLeft > layout.pointsRight)
+  })
+
   test('первый и финальный заголовки центрированы, остальные выровнены слева', async () => {
     for (const viewport of [
       { width: 1440, height: 1200 },

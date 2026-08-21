@@ -1967,9 +1967,9 @@ ul {
 /* --------------------------------------------------------------------------
    8c. Продукт — вкладки форматов и кадр возможности
 
-   Порт секции use-cases исходного сайта: заголовок и вкладки стоят в одну
-   строку, тело делится на колонку карточек (432 юнита) и панель с кадром.
-   Кадр шире панели и сдвинут вправо — на оригинале скриншот уходит за край.
+   Порт секции use-cases исходного сайта: полноширинный заголовок, вкладки
+   отдельной строкой под ним и тело с узкой колонкой текстовых пунктов рядом
+   с широкой панелью выбранного кадра.
    -------------------------------------------------------------------------- */
 
 .ucase {
@@ -1983,26 +1983,34 @@ ul {
 
 .ucase__header {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
   gap: calc(20 * var(--u));
 }
 
 .ucase__title {
-  max-width: 50%;
-  font-size: var(--fs-h2);
+  width: 100%;
+  max-width: none;
+  font-size: clamp(34px, 3.2vw, 46px);
   font-weight: var(--weight-title);
-  line-height: 1.2308;
+  line-height: 1.1;
   letter-spacing: var(--track-h2);
   color: var(--text-primary);
+  white-space: nowrap;
 }
 
 .ucase__group {
   display: inline-flex;
   flex-direction: row;
   gap: calc(8 * var(--u));
+  align-self: flex-start;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+
+.ucase__group::-webkit-scrollbar { display: none; }
 
 .ucase__tab {
   display: inline-flex;
@@ -2032,7 +2040,7 @@ ul {
 
 .ucase__body {
   display: grid;
-  grid-template-columns: calc(432 * var(--u)) minmax(0, 1fr);
+  grid-template-columns: 24.5% minmax(0, 1fr);
   gap: calc(32 * var(--u));
   align-items: stretch;
 }
@@ -2148,7 +2156,12 @@ ul {
     gap: calc(16 * var(--u));
   }
 
-  .ucase__title { max-width: none; }
+  .ucase__title {
+    max-width: none;
+    font-size: var(--fs-h2);
+    line-height: 1.2308;
+    white-space: normal;
+  }
 
   /* Вкладки не помещаются в строку — уводим их в горизонтальную прокрутку */
   .ucase__group {
