@@ -36,8 +36,6 @@ make dev        # установка зависимостей + дев-серв�
 | `make test` | Браузерные тесты интерфейса (нужен установленный Chrome) |
 | `make clean` | Удалить `dist` и `node_modules` |
 
-Без `make` работают те же команды через npm: `npm install`, `npm run dev`,
-`npm run build`, `npm run preview`, `npm test`.
 
 ## 4. Стек
 

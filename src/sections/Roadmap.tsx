@@ -33,8 +33,8 @@ export function Roadmap() {
   return (
     <section className="rmap" id="roadmap">
       <header className="rmap__header dds-reveal">
-        <h2 className="rmap__title">{roadmap.title}</h2>
-        <p className="rmap__subtitle">{roadmap.subtitle}</p>
+        <h2 className="section__title">{roadmap.title}</h2>
+        <p className="section__subtitle">{roadmap.subtitle}</p>
       </header>
 
       <div

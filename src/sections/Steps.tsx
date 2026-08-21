@@ -10,8 +10,8 @@ export function Steps() {
   return (
     <section className="steps" id="platform">
       <header className="steps__header dds-reveal">
-        <h2 className="steps__title">{steps.title}</h2>
-        <p className="steps__subtitle">{steps.subtitle}</p>
+        <h2 className="section__title">{steps.title}</h2>
+        <p className="section__subtitle">{steps.subtitle}</p>
       </header>
 
       <div className="steps__grid">

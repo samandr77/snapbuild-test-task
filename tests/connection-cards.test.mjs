@@ -240,8 +240,8 @@ describe('интерфейс сайта', { concurrency: false }, () => {
       (() => {
         const section = document.querySelector('.steps')
         const header = section.querySelector('.steps__header')
-        const title = section.querySelector('.steps__title')
-        const subtitle = section.querySelector('.steps__subtitle')
+        const title = section.querySelector('.section__title')
+        const subtitle = section.querySelector('.section__subtitle')
         const grid = section.querySelector('.steps__grid')
         const rect = (element) => {
           const { left, right, top, bottom } = element.getBoundingClientRect()
