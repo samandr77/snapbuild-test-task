@@ -226,6 +226,51 @@ describe('интерфейс сайта', { concurrency: false }, () => {
     }
   })
 
+  test('секция платформы сохраняет направляющие и не перекрывает заголовок карточками', async () => {
+    await useViewport(1440, 1200)
+    await evaluate(`document.querySelector('.steps').scrollIntoView({ block: 'start' })`)
+    await waitForValue(
+      `document.querySelector('.steps__header').hasAttribute('data-visible') &&
+        getComputedStyle(document.querySelector('.steps__header')).transform === 'none'`,
+      Boolean,
+      'platform section reveal',
+    )
+
+    const layout = await evaluate(`
+      (() => {
+        const section = document.querySelector('.steps')
+        const header = section.querySelector('.steps__header')
+        const title = section.querySelector('.steps__title')
+        const subtitle = section.querySelector('.steps__subtitle')
+        const grid = section.querySelector('.steps__grid')
+        const rect = (element) => {
+          const { left, right, top, bottom } = element.getBoundingClientRect()
+          return { left, right, top, bottom }
+        }
+
+        return {
+          direction: getComputedStyle(header).flexDirection,
+          paddingLeft: Number.parseFloat(getComputedStyle(section).paddingLeft),
+          title: rect(title),
+          subtitle: rect(subtitle),
+          header: rect(header),
+          grid: rect(grid),
+        }
+      })()
+    `)
+
+    assert.equal(layout.direction, 'column')
+    assert.ok(layout.paddingLeft >= 39, `expected desktop guide near 40px, got ${layout.paddingLeft}px`)
+    assert.ok(Math.abs(layout.title.left - layout.subtitle.left) <= 1)
+    assert.ok(Math.abs(layout.title.left - layout.grid.left) <= 1)
+    assert.ok(layout.subtitle.top >= layout.title.bottom)
+    assert.ok(
+      layout.grid.top >= layout.header.bottom + 39,
+      `expected at least 39px between header and grid, got ${layout.grid.top - layout.header.bottom}px`,
+    )
+    assert.ok(layout.grid.right <= 1401)
+  })
+
   test('цена скрыта внутри карточки на десктопе и раскрывается при наведении', async () => {
     await useViewport(1440, 1200)
 

@@ -1882,10 +1882,19 @@ ul {
 }
 
 
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: calc(40 * var(--u));
+  padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
+  background: var(--background-primary);
+}
+
 .steps__header {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: calc(8 * var(--u));
 }
 
@@ -1947,8 +1956,7 @@ ul {
 
 @media (max-width: 1023px) {
   .steps__header {
-    flex-direction: column;
-    gap: calc(12 * var(--u));
+    gap: calc(8 * var(--u));
   }
 
   /* В исходнике карточки на планшете не перестраиваются, а сжимаются:
