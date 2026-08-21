@@ -714,7 +714,7 @@ ul {
   to { background-position: 0% 50%; }
 }
 
-@media (hover: hover) {
+@media (hover: hover), (min-width: 768px) {
   .btn--launch:hover .btn__label,
   .btn--gradient:hover .btn__label {
     animation: btn-text-shine 0.75s linear 1;
@@ -3332,7 +3332,7 @@ ul {
   transition-duration: 0s;
 }
 
-@media (max-width: 767px), (hover: none) {
+@media (max-width: 767px) {
   .reveal-card { align-items: center; }
 
   .reveal-card::before,
